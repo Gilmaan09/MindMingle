@@ -1,4 +1,4 @@
-# 🧠 MindMingle – Mental Wellness MERN App
+# 🧠 MindMingle – Mental Wellness & Mood Tracking Platform
 
 A full-stack mental wellness platform that helps users track moods, perform mindfulness exercises, and engage in a supportive community.
 
