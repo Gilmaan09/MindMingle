@@ -15,6 +15,8 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 
 ---
 ## 📸 Screenshots
+### Home Page
+![Home](frontend/public/screenshots/home.png)
 
 ### Dashboard
 ![Dashboard](frontend/public/screenshots/dashboard.png)
@@ -27,9 +29,6 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 
 ### Community Support
 ![Community Support](frontend/public/screenshots/community.png)
-
-### Home Page
-![Home](frontend/public/screenshots/home.png)
 
 ### Profile
 ![Profile](frontend/public/screenshots/profile.png)
