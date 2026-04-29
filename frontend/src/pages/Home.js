@@ -361,7 +361,7 @@ const Hero = ({ onSignup,isMobile }) => (
           fontWeight: '300',
           animation: 'fadeUp 0.9s ease 0.25s both',
         }}>
-          Mindmingle guides you toward lasting peace of mind through personalized
+          Mindmingle guide you toward lasting peace of mind through personalized
           mindfulness sessions, gentle reminders, mood tracking, and
           a warm community — all in one beautiful space.
         </p>
