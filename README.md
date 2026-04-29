@@ -95,8 +95,6 @@ npm start
 
 - Add AI-based mood suggestions
 - Improve UI animations
-- Add notifications system
-- Mobile app version
 
 ## 👨‍💻 Author
 
