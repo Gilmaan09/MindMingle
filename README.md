@@ -14,6 +14,16 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 - 📊 Dashboard with analytics
 
 ---
+## 📸 Screenshots
+
+### Dashboard
+![Dashboard](frontend/public/screenshots/dashboard.png)
+
+### Exercises
+![Exercises](frontend/public/screenshots/exercises.png)
+
+### Mood Tracker
+![Mood](frontend/public/screenshots/mood.png)
 
 ## 🛠 Tech Stack
 
