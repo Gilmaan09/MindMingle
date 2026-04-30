@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
+import { useEffect } from 'react';
 
 import { AuthProvider, useAuth } from './context/AuthContext';
 // import Layout from './components/Layout';
@@ -38,8 +39,42 @@ const PublicRoute = ({ children }) => {
   // );
   // return !user ? children : <Navigate to="/dashboard" replace />;
 };
+const checkReminders = () => {
+  const reminders = JSON.parse(localStorage.getItem("reminders")) || [];
+
+  const now = new Date();
+  const currentTime = now.toTimeString().slice(0, 5);
+  const today = now.toLocaleDateString('en-US', { weekday: 'short' });
+
+  reminders.forEach((reminder) => {
+    if (
+      reminder.isActive &&
+      reminder.time === currentTime &&
+      now.getSeconds() === 0 &&
+      (
+        reminder.frequency === 'daily' ||
+        (reminder.frequency === 'weekly' && reminder.days.includes(today)) ||
+        (reminder.frequency === 'custom' && reminder.days.includes(today))
+      )
+    ) {
+      if (Notification.permission === "granted") {
+        new Notification("MindMingle Reminder 🔔", {
+          body: reminder.message,
+        });
+      }
+    }
+  });
+};
+
 
 function App() {
+    useEffect(() => {
+    const interval = setInterval(() => {
+      checkReminders();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <AuthProvider>
       <Router>

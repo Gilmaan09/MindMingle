@@ -18,65 +18,66 @@ const Reminders = () => {
 
   // useEffect(() => { fetchReminders(); }, []);
   useEffect(() => {
-  fetchReminders();
+    fetchReminders();
 
-  if (Notification.permission !== "granted") {
-    Notification.requestPermission();
-  }
-}, []);
+    if (Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+  }, []);
 
-// useEffect(() => {
-//   const interval = setInterval(() => {
-//     const now = new Date();
-//     const currentTime = now.toTimeString().slice(0, 5); // "HH:MM"
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const now = new Date();
+  //     const currentTime = now.toTimeString().slice(0, 5); // "HH:MM"
 
-//     reminders.forEach(reminder => {
-//       if (
-//         reminder.isActive &&
-//         reminder.time === currentTime
-//       ) {
-//         new Notification("MindMingle Reminder 🔔", {
-//           body: reminder.message,
-//         });
-//       }
-//     });
+  //     reminders.forEach(reminder => {
+  //       if (
+  //         reminder.isActive &&
+  //         reminder.time === currentTime
+  //       ) {
+  //         new Notification("MindMingle Reminder 🔔", {
+  //           body: reminder.message,
+  //         });
+  //       }
+  //     });
 
-//   }, 60000);
+  //   }, 60000);
 
-//   return () => clearInterval(interval);
-// }, [reminders]);
-useEffect(() => {
-  const interval = setInterval(() => {
-    const now = new Date();
-    const currentTime = now.toTimeString().slice(0, 5);
-    const today = now.toLocaleDateString('en-US', { weekday: 'short' });
+  //   return () => clearInterval(interval);
+  // }, [reminders]);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const now = new Date();
+      const currentTime = now.toTimeString().slice(0, 5);
+      const today = now.toLocaleDateString('en-US', { weekday: 'short' });
 
-    reminders.forEach(reminder => {
-      if (
-        reminder.isActive &&
-        reminder.time === currentTime && now.getSeconds()===0 &&
-        (
-          reminder.frequency === 'daily' ||
-          (reminder.frequency === 'weekly' && reminder.days.includes(today)) ||
-          (reminder.frequency === 'custom' && reminder.days.includes(today))
-        )
-      ) {
-        new Notification("MindMingle Reminder 🔔", {
-          body: reminder.message,
-        });
-      }
-    });
+      reminders.forEach(reminder => {
+        if (
+          reminder.isActive &&
+          reminder.time === currentTime && now.getSeconds() === 0 &&
+          (
+            reminder.frequency === 'daily' ||
+            (reminder.frequency === 'weekly' && reminder.days.includes(today)) ||
+            (reminder.frequency === 'custom' && reminder.days.includes(today))
+          )
+        ) {
+          new Notification("MindMingle Reminder 🔔", {
+            body: reminder.message,
+          });
+        }
+      });
 
-  }, 1000);
+    }, 1000);
 
-  return () => clearInterval(interval);
-}, [reminders]);
-  
+    return () => clearInterval(interval);
+  }, [reminders]);
+
 
   const fetchReminders = async () => {
     try {
       const { data } = await axios.get('/api/reminders');
       setReminders(data.data);
+      localStorage.setItem("reminders", JSON.stringify(data.data))
     } catch { } finally { setLoading(false); }
   };
 
