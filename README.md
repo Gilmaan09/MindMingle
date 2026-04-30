@@ -28,6 +28,9 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 ### Home Page
 ![Home](frontend/public/screenshots/home.png)
 
+### AI-Assistant
+![AI](frontend/public/screenshots/AI-Assistant.png)
+
 ### Dashboard
 ![Dashboard](frontend/public/screenshots/dashboard.png)
 
