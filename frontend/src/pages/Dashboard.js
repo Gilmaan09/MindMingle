@@ -378,6 +378,7 @@ const Dashboard = () => {
         <p>How are you feeling today? Take a moment to check in.</p>
       </div>
 
+
       {/* Daily Tip */}
       <div className="tip-banner">
         <div>

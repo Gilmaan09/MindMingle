@@ -2,20 +2,37 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const aiRoutes = require("./routes/ai")
+// // dotenv.config();
 
+// const app = express();
+// app.use("/api/ai",aiRoutes)
+// // Middleware
+// app.use(cors({
+//   origin: process.env.CLIENT_URL || 'http://localhost:3000',
+//   credentials: true
+// }));
+// app.use(express.json());
 
-// dotenv.config();
-
+// // Routes
+// app.use('/api/auth', require('./routes/auth'));
+// app.use('/api/mood', require('./routes/mood'));
+// app.use('/api/exercises', require('./routes/exercises'));
+// app.use('/api/community', require('./routes/community'));
+// app.use('/api/reminders', require('./routes/reminders'));
 const app = express();
 
-// Middleware
+// ✅ FIRST: middleware
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:3000',
   credentials: true
 }));
-app.use(express.json());
 
-// Routes
+app.use(express.json()); // ✅ MUST BE BEFORE ROUTES
+
+// ✅ THEN: routes
+app.use("/api/ai", aiRoutes);
+
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/mood', require('./routes/mood'));
 app.use('/api/exercises', require('./routes/exercises'));

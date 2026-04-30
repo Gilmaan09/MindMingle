@@ -18,6 +18,7 @@ import Reminders from './pages/Reminders';
 import Profile from './pages/Profile';
 import HomePage from './pages/Home';
 import Layout from './components/Layout';
+import MentalAssistant from './pages/MentalAssistant';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -95,6 +96,7 @@ function App() {
     <Route path="/community" element={<Community />} />
     <Route path="/reminders" element={<Reminders />} />
     <Route path="/profile" element={<Profile />} />
+    <Route path="/assistant" element={<MentalAssistant />} />
     
 
   </Route>

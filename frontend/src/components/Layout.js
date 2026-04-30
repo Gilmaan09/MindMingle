@@ -9,6 +9,7 @@ const navItems = [
   { path: '/community', icon: '🤝', label: 'Community' },
   { path: '/reminders', icon: '🔔', label: 'Reminders' },
   { path: '/profile', icon: '👤', label: 'Profile' },
+  { path: '/assistant', icon: '💬', label: 'Assistant' },
 ];
 
 const Layout = () => {
@@ -58,35 +59,6 @@ const Layout = () => {
             <span className="nav-icon">🚪</span>
             Sign Out
           </button>
-         
-
-        {/* <div className="sidebar-footer">
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: '12px',
-            padding: '16px'
-          }}>
-            <div style={{
-              width: '40px', height: '40px', borderRadius: '50%',
-              background: 'linear-gradient(135deg, var(--sage), var(--lavender))',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: 'white', fontWeight: '700', fontSize: '1rem'
-            }}>
-              {user?.name?.charAt(0).toUpperCase()}
-            </div>
-            <div>
-              <div style={{ color: 'var(--cream)', fontSize: '0.9rem', fontWeight: '500' }}>
-                {user?.name}
-              </div>
-              <div style={{ color: 'var(--warm-gray)', fontSize: '0.75rem' }}>
-                {user?.email?.substring(0, 20)}...
-              </div>
-            </div>
-          </div>
-          <button className="nav-item" onClick={handleLogout} style={{ color: 'var(--coral)' }}>
-            <span className="nav-icon">🚪</span>
-            Sign Out
-          </button>
-        </div> */}
       </aside>
 
       {/* Main content */}
