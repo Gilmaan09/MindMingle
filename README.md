@@ -14,6 +14,16 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 - 📊 Dashboard with analytics
 
 ---
+
+### 🤖 AI Assistant (NEW)
+- 💬 Chat-based mental wellness assistant
+- 🧠 Provides emotional support & suggestions
+- ⚡ Real-time responses using OpenRouter API
+- 🎤 Voice input support (Speech Recognition)
+- 🔊 Voice output (Text-to-Speech)
+
+---
+
 ## 📸 Screenshots
 ### Home Page
 ![Home](frontend/public/screenshots/home.png)
