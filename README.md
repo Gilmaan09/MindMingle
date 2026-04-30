@@ -1,4 +1,4 @@
-# 🧠 MindMingle – Mental Wellness & Mood Tracking Platform
+# 🧠 MindMingle – Smart Mentl Wellness Platform with AI Assistant
 
 A full-stack mental wellness platform that helps users track moods, perform mindfulness exercises, and engage in a supportive community.
 
