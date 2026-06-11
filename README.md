@@ -7,7 +7,8 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 ## 🚀 Features
 
 - 🧠 Mood Tracking with insights
-- � Mindfulness Exercises (breathing, meditation, etc.)
+- 🤖 AI-based mood suggestions and support
+- 🧘 Mindfulness Exercises (breathing, meditation, etc.)
 - 🔔 Smart Reminders
 - 👥 Anonymous Community Support
 - 🔐 Secure Authentication (JWT + OAuth)
@@ -17,6 +18,8 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 
 ### 🤖 AI Assistant (NEW)
 - 💬 Chat-based mental wellness assistant
+- ✨ Refreshed chat UI with quick-reply prompts and suggestions
+- 🤖 AI-powered mood suggestions integrated into Mood Tracker
 - 🧠 Provides emotional support & suggestions
 - ⚡ Real-time responses using OpenRouter API
 - 🎤 Voice input support (Speech Recognition)
