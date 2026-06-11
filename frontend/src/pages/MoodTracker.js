@@ -29,8 +29,28 @@ const MoodTracker = () => {
   const [activeTab, setActiveTab] = useState('log');
   const [form, setForm] = useState({ mood: null, note: '', tags: [], activities: [] });
   const [submitting, setSubmitting] = useState(false);
+  const [suggestions, setSuggestions] = useState('');
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
 
   useEffect(() => { fetchMoods(); }, []);
+
+  const fetchSuggestions = async () => {
+    if (!form.mood) return toast.error('Select a mood first to get suggestions');
+    setSuggestionsLoading(true);
+    try {
+      const { data } = await axios.post('/api/mood/suggestions', {
+        mood: form.mood,
+        note: form.note,
+        activities: form.activities
+      });
+      setSuggestions(data.suggestions);
+    } catch (err) {
+      console.error(err);
+      toast.error('Unable to generate suggestions right now');
+    } finally {
+      setSuggestionsLoading(false);
+    }
+  };
 
   const fetchMoods = async () => {
     try {
@@ -51,6 +71,7 @@ const MoodTracker = () => {
       await axios.post('/api/mood', form);
       toast.success('Mood logged! 🌟');
       setForm({ mood: null, note: '', tags: [], activities: [] });
+      setSuggestions('');
       fetchMoods();
       setActiveTab('history');
     } catch (err) {
@@ -210,13 +231,48 @@ const MoodTracker = () => {
             </div>
           </div>
 
-          <button
-            className="btn btn-primary btn-lg"
-            onClick={submitMood}
-            disabled={submitting || !form.mood}
-          >
-            {submitting ? 'Saving...' : 'Save Mood Entry'}
-          </button>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', marginTop: '20px' }}>
+            <button
+              type="button"
+              className="btn btn-primary btn-lg"
+              onClick={submitMood}
+              disabled={submitting || !form.mood}
+            >
+              {submitting ? 'Saving...' : 'Save Mood Entry'}
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary btn-lg"
+              onClick={fetchSuggestions}
+              disabled={suggestionsLoading}
+            >
+              {suggestionsLoading ? 'Thinking...' : 'Get Mood Suggestions'}
+            </button>
+          </div>
+
+          {suggestions ? (
+            <div className="suggestion-panel card" style={{ marginTop: '28px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', gap: '12px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                <div>
+                  <h3 style={{ margin: 0, fontSize: '1.15rem' }}>AI Mood Suggestions</h3>
+                  <p style={{ margin: '8px 0 0', color: 'var(--warm-gray)' }}>
+                    Personalized support based on your mood and note.
+                  </p>
+                </div>
+                <span style={{ fontSize: '1.8rem' }}>💡</span>
+              </div>
+              <div className="suggestion-text" style={{ marginTop: '18px', whiteSpace: 'pre-wrap', color: 'var(--charcoal-soft)', lineHeight: 1.75 }}>
+                {suggestions}
+              </div>
+            </div>
+          ) : (
+            <div className="suggestion-panel card" style={{ marginTop: '28px' }}>
+              <h3 style={{ marginBottom: '12px', fontSize: '1.1rem' }}>Need support with this mood?</h3>
+              <p style={{ margin: 0, color: 'var(--warm-gray)' }}>
+                Click "Get Mood Suggestions" for kind, practical ideas that match how you're feeling.
+              </p>
+            </div>
+          )}
         </div>
       )}
 

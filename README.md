@@ -7,7 +7,8 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 ## 🚀 Features
 
 - 🧠 Mood Tracking with insights
-- 🧘 Mindfulness Exercises (breathing, meditation, etc.)
+- � AI-based mood suggestions and support
+- �🧘 Mindfulness Exercises (breathing, meditation, etc.)
 - 🔔 Smart Reminders
 - 👥 Anonymous Community Support
 - 🔐 Secure Authentication (JWT + OAuth)

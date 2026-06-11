@@ -706,6 +706,25 @@ h1, h2, h3 {
 .mood-emoji { font-size: 2rem; }
 .mood-label { font-size: 0.75rem; font-weight: 500; color: var(--warm-gray); }
 
+.suggestion-panel {
+  background: #fff;
+  border: 1px solid rgba(124,159,138,0.12);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.suggestion-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.suggestion-text {
+  font-size: 0.95rem;
+  color: var(--charcoal-soft);
+}
+
 /* Exercise Cards */
 .exercise-card {
   background: var(--white);
