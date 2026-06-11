@@ -12,11 +12,13 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 - 👥 Anonymous Community Support
 - 🔐 Secure Authentication (JWT + OAuth)
 - 📊 Dashboard with analytics
+- 💬 Enhanced AI assistant chat UI with quick actions
 
 ---
 
 ### 🤖 AI Assistant (NEW)
-- 💬 Chat-based mental wellness assistant
+- 💬 Chat-based mental wellness assistant with refreshed interface
+- ✨ Smooth chat bubble UI and quick-reply prompts for faster support
 - 🧠 Provides emotional support & suggestions
 - ⚡ Real-time responses using OpenRouter API
 - 🎤 Voice input support (Speech Recognition)
@@ -25,6 +27,7 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 ---
 
 ## 📸 Screenshots
+
 ### Home Page
 ![Home](frontend/public/screenshots/home.png)
 
@@ -92,6 +95,8 @@ cd frontend
 npm install
 npm start
 ```
+
+> Note: Do not commit `node_modules` folders or local `.env` files to GitHub.
 
 ---
 

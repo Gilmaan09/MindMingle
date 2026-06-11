@@ -1,3 +1,8 @@
 backend/node_modules
 frontend/node_modules
+frontend/build
+.env
 backend/.env
+frontend/.env
+backend/.env.local
+frontend/.env.local
