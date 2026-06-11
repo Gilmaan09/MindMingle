@@ -7,19 +7,16 @@ A full-stack mental wellness platform that helps users track moods, perform mind
 ## 🚀 Features
 
 - 🧠 Mood Tracking with insights
-- � AI-based mood suggestions and support
-- �🧘 Mindfulness Exercises (breathing, meditation, etc.)
+- � Mindfulness Exercises (breathing, meditation, etc.)
 - 🔔 Smart Reminders
 - 👥 Anonymous Community Support
 - 🔐 Secure Authentication (JWT + OAuth)
 - 📊 Dashboard with analytics
-- 💬 Enhanced AI assistant chat UI with quick actions
 
 ---
 
 ### 🤖 AI Assistant (NEW)
-- 💬 Chat-based mental wellness assistant with refreshed interface
-- ✨ Smooth chat bubble UI and quick-reply prompts for faster support
+- 💬 Chat-based mental wellness assistant
 - 🧠 Provides emotional support & suggestions
 - ⚡ Real-time responses using OpenRouter API
 - 🎤 Voice input support (Speech Recognition)
@@ -97,8 +94,6 @@ npm install
 npm start
 ```
 
-> Note: Do not commit `node_modules` folders or local `.env` files to GitHub.
-
 ---
 
 ## 🌟 Highlights
@@ -112,7 +107,6 @@ npm start
 
 ## 🚀 Future Improvements
 
-- Add AI-based mood suggestions
 - Improve UI animations
 
 ## 👨‍💻 Author
