@@ -187,32 +187,36 @@ const Community = () => {
   );
 
   return (
-    <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+    <div className="community-page">
+      <div className="page-header community-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '24px' }}>
         <div>
-          <h2>Community Support</h2>
-          <p>A safe, anonymous space to share and connect</p>
+          <h2 style={{ fontSize: '2.2rem', marginBottom: '8px' }}>Community Support</h2>
+          <p style={{ fontSize: '0.95rem' }}>A safe, anonymous space to share experiences and feel less alone</p>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowCreate(!showCreate)}>
-          {showCreate ? '✕ Cancel' : '+ Share Thoughts'}
+        <button className="btn btn-primary" onClick={() => setShowCreate(!showCreate)} style={{ whiteSpace: 'nowrap', marginTop: '4px' }}>
+          {showCreate ? '✕ Close' : '✍️ Share Thoughts'}
         </button>
       </div>
 
       {/* Safety banner */}
       <div style={{
-        background: 'linear-gradient(135deg, rgba(181,174,209,0.2), rgba(158,196,208,0.2))',
-        border: '1px solid rgba(181,174,209,0.4)',
-        borderRadius: 'var(--radius-md)', padding: '14px 20px',
-        marginBottom: '24px', fontSize: '0.875rem', color: 'var(--charcoal-soft)'
+        background: 'linear-gradient(135deg, rgba(124,159,138,0.08), rgba(158,196,208,0.1))',
+        border: '1.5px solid rgba(124,159,138,0.2)',
+        borderRadius: 'var(--radius-md)', padding: '16px 20px',
+        marginBottom: '28px', fontSize: '0.875rem', color: 'var(--charcoal-soft)',
+        display: 'flex', alignItems: 'center', gap: '12px'
       }}>
-        🛡️ This is a <strong>safe, supportive space</strong>. All posts are anonymous by default.
-        Be kind and respectful. If you're in crisis, please contact a professional.
+        <span style={{ fontSize: '1.3rem' }}>🛡️</span>
+        <div>
+          <strong style={{ color: 'var(--sage-dark)' }}>Safe & Supportive</strong> — All posts are anonymous by default. Be kind and respectful. If you're in crisis, please reach out to a professional.
+        </div>
       </div>
 
       {/* Create Post */}
       {showCreate && (
-        <div className="card" style={{ marginBottom: '24px' }}>
-          <h3 style={{ marginBottom: '16px', fontSize: '1.2rem' }}>Share with the Community</h3>
+        <div className="card community-composer" style={{ marginBottom: '28px', background: 'linear-gradient(135deg, rgba(248,241,232,0.8), var(--white))' }}>
+          <h3 style={{ marginBottom: '4px', fontSize: '1.3rem' }}>Share with the Community</h3>
+          <p style={{ color: 'var(--warm-gray)', fontSize: '0.85rem', marginBottom: '20px' }}>Write from the heart. Your thoughts matter.</p>
 
           <div className="form-group">
             <textarea
@@ -220,27 +224,27 @@ const Community = () => {
               placeholder="Share your thoughts, experiences, or ask for support..."
               value={form.content}
               onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
-              style={{ minHeight: '120px' }}
+              style={{ minHeight: '140px', borderRadius: 'var(--radius-md)', fontSize: '0.95rem' }}
             />
-            <div style={{ fontSize: '0.78rem', color: 'var(--warm-gray)', marginTop: '4px' }}>
-              {form.content.length}/1000
+            <div style={{ fontSize: '0.78rem', color: 'var(--warm-gray)', marginTop: '8px', textAlign: 'right' }}>
+              <span style={{ opacity: form.content.length > 800 ? 1 : 0.6 }}>{form.content.length}/1000</span>
             </div>
           </div>
 
           <div className="form-group">
-            <label className="form-label">Tags (optional)</label>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '8px' }}>
+            <label className="form-label" style={{ marginBottom: '10px', fontWeight: '600' }}>What's on your mind? (optional tags)</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
               {experienceTags.map(tag => (
                 <button
                   key={tag}
                   onClick={() => toggleTag(tag)}
                   style={{
-                    padding: '5px 12px', borderRadius: '20px', fontSize: '0.8rem',
-                    border: '1.5px solid',
-                    borderColor: form.tags.includes(tag) ? 'var(--sage)' : 'var(--cream-dark)',
-                    background: form.tags.includes(tag) ? 'rgba(124,159,138,0.12)' : 'white',
-                    color: form.tags.includes(tag) ? 'var(--sage-dark)' : 'var(--warm-gray)',
-                    cursor: 'pointer', transition: 'all 0.2s', fontFamily: 'DM Sans, sans-serif'
+                    padding: '6px 14px', borderRadius: '999px', fontSize: '0.8rem',
+                    border: form.tags.includes(tag) ? 'none' : '1.5px solid var(--cream-dark)',
+                    background: form.tags.includes(tag) ? 'linear-gradient(135deg, var(--sage-dark), var(--sage))' : 'var(--white)',
+                    color: form.tags.includes(tag) ? 'white' : 'var(--warm-gray)',
+                    cursor: 'pointer', transition: 'all 0.2s', fontFamily: 'DM Sans, sans-serif',
+                    boxShadow: form.tags.includes(tag) ? 'var(--shadow-sm)' : 'none'
                   }}
                 >
                   {tag}
@@ -249,31 +253,32 @@ const Community = () => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap', marginTop: '20px' }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.875rem' }}>
               <input
                 type="checkbox"
                 checked={form.isAnonymous}
                 onChange={e => setForm(f => ({ ...f, isAnonymous: e.target.checked }))}
+                style={{ cursor: 'pointer' }}
               />
-              Post anonymously (recommended)
+              <span>Post anonymously (recommended)</span>
             </label>
-            <button className="btn btn-primary" onClick={createPost} disabled={submitting}>
-              {submitting ? 'Posting...' : 'Share Post'}
+            <button className="btn btn-primary" onClick={createPost} disabled={submitting} style={{ minWidth: '140px' }}>
+              {submitting ? '⏳ Posting...' : '✓ Share Post'}
             </button>
           </div>
         </div>
       )}
 
       {/* Search */}
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '28px' }}>
         <input
           type="text"
           className="form-input"
-          placeholder="🔍 Search posts..."
+          placeholder="🔍 Search conversations..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          style={{ maxWidth: '360px' }}
+          style={{ maxWidth: '440px', fontSize: '0.95rem', padding: '12px 16px' }}
         />
       </div>
 
