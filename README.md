@@ -90,7 +90,7 @@ cd MindMingle
 ```
 cd backend
 npm install
-npm start
+node app.js
 ```
 
 ### 3. Frontend
