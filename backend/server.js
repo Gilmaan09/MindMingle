@@ -28,7 +28,8 @@ app.use(cors({
   credentials: true
 }));
 
-app.use(express.json()); // ✅ MUST BE BEFORE ROUTES
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // ✅ THEN: routes
 app.use("/api/ai", aiRoutes);

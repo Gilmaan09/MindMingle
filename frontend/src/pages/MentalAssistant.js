@@ -12,7 +12,18 @@ const MentalAssistant = () => {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [sessionId, setSessionId] = useState("");
+  const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
   const messagesEndRef = useRef(null);
+
+  // Generate a unique session ID on component mount
+  useEffect(() => {
+    const newSessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    setSessionId(newSessionId);
+    console.log("Chat session started:", newSessionId);
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,18 +64,46 @@ const MentalAssistant = () => {
     window.speechSynthesis.speak(utterance);
   };
 
+  const handleFileSelection = (event) => {
+    const files = Array.from(event.target.files || []);
+    if (!files.length) return;
+    setSelectedFiles((prev) => [...prev, ...files]);
+    event.target.value = "";
+  };
+
+  const openCamera = () => {
+    cameraInputRef.current?.click();
+  };
+
+  const removeFile = (indexToRemove) => {
+    setSelectedFiles((prev) => prev.filter((_, index) => index !== indexToRemove));
+  };
+
   const handleSend = async () => {
     const trimmed = message.trim();
-    if (!trimmed) return;
+    if (!trimmed && !selectedFiles.length) return;
 
-    const userMsg = { sender: "user", text: trimmed };
+    const userMsg = {
+      sender: "user",
+      text: trimmed || `Shared ${selectedFiles.length} attachment${selectedFiles.length > 1 ? "s" : ""}`,
+      files: selectedFiles.map((file) => file.name)
+    };
+
     setChat((prev) => [...prev, userMsg]);
     setMessage("");
+    setSelectedFiles([]);
     setIsLoading(true);
 
     try {
-      const res = await axios.post("/api/ai/chat", {
-        message: trimmed,
+      const formData = new FormData();
+      formData.append("message", trimmed);
+      formData.append("sessionId", sessionId);
+      selectedFiles.forEach((file) => formData.append("files", file));
+
+      console.log("Sending message with sessionId:", sessionId);
+
+      const res = await axios.post("/api/ai/chat", formData, {
+        headers: { "Content-Type": "multipart/form-data" }
       });
 
       const botMsg = { sender: "bot", text: res.data.reply };
@@ -95,15 +134,54 @@ const MentalAssistant = () => {
     }
   };
 
+  const startNewChat = async () => {
+    try {
+      // Clear old session from database
+      if (sessionId) {
+        await axios.post("/api/ai/clear-session", { sessionId });
+      }
+
+      // Generate new session ID
+      const newSessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      setSessionId(newSessionId);
+      setChat([]);
+      setMessage("");
+      setSelectedFiles([]);
+      
+      console.log("New chat session started:", newSessionId);
+    } catch (error) {
+      console.error("Error starting new chat:", error);
+    }
+  };
+
   return (
     <div className="assistant-page">
       <div className="assistant-header card">
         <div>
           <p className="assistant-subtitle">Personal support, anytime.</p>
-          <h2>Mind Assistant</h2>
+          <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+            <h2>Mind Assistant</h2>
+            <button
+              type="button"
+              onClick={startNewChat}
+              style={{
+                padding: "8px 16px",
+                background: "linear-gradient(135deg, #5a7a6a, #7c9f8a)",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontSize: "0.9rem",
+                fontWeight: "500",
+                whiteSpace: "nowrap"
+              }}
+            >
+              ✨ New Chat
+            </button>
+          </div>
           <p className="assistant-description">
-            Chat with your guided mental wellness companion. Ask for breathing
-            tips, mood support, or a quick motivation boost.
+            Chat with your guided mental wellness companion. Ask for breathing tips,
+            mood support, a quick motivation boost, or share a photo or document for guidance.
           </p>
         </div>
         <div className="assistant-hero">
@@ -128,6 +206,11 @@ const MentalAssistant = () => {
               >
                 <div className="assistant-message-bubble">
                   <span>{msg.text}</span>
+                  {msg.files && msg.files.length > 0 && (
+                    <small className="assistant-attachment-list">
+                      {msg.files.join(", ")}
+                    </small>
+                  )}
                 </div>
               </div>
             ))}
@@ -147,6 +230,17 @@ const MentalAssistant = () => {
             ))}
           </div>
 
+          {selectedFiles.length > 0 && (
+            <div className="assistant-file-list">
+              {selectedFiles.map((file, index) => (
+                <div key={`${file.name}-${index}`} className="assistant-file-chip">
+                  <span>{file.name}</span>
+                  <button type="button" onClick={() => removeFile(index)}>×</button>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div className="chat-input-modern">
             <input
               type="text"
@@ -155,6 +249,38 @@ const MentalAssistant = () => {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               aria-label="Message input"
+            />
+            <button
+              type="button"
+              className="camera-btn"
+              onClick={openCamera}
+              title="Take a photo"
+            >
+              📷
+            </button>
+            <input
+              ref={cameraInputRef}
+              type="file"
+              accept="image/*"
+              capture="environment"
+              hidden
+              onChange={handleFileSelection}
+            />
+            <button
+              type="button"
+              className="upload-btn"
+              onClick={() => fileInputRef.current?.click()}
+              title="Upload document or photo"
+            >
+              📎
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,.pdf,.doc,.docx,.txt,.csv,.json"
+              multiple
+              hidden
+              onChange={handleFileSelection}
             />
             <button
               type="button"
